@@ -4,4 +4,6 @@
 prueba
 
 
-![](Ejercicio2-img1.gif)
+![][def]
+
+[def]: Ejercicio2-img1.gif
