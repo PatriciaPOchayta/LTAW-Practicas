@@ -1,0 +1,74 @@
+
+Ejercicio 1
+    a) Explica para qué sirve la primera línea del documento y por qué es necesaria
+        Define las reglas del documento, indica que el documento sigue el tipo DTD, definido en un archivo externo
+        llamado "urjc_ml.dtd"
+
+    b) Si se omitiese esta línea, ¿Qué piensas que ocurriría?
+        No se produce la validacion al no poder contrastarlo con el archivo externo donde estan definidas
+        las normas, por lo que no habria referencia y no se podrian contrastar errores.
+
+    c) Sin conocer el contenido del fichero urjc_ml.dtd, ¿el documento es sintácticamente correcto?
+        Si, todas las etiquetas estan definidas, y con su apertura y cierre correspondiente.
+
+    d) ¿Qué hace la tercera línea?
+        Es solo un comentario, no hace nada.
+
+    e) ¿Cuantas etiquetas de apertura hay? ¿Cuantas de cierre?
+        9 en total.
+
+    f) Dibuja el diagrama de contenedores de este documento
+        *ver diagrama-contenedores.png
+
+    g) Dibuja la estructura en árbol que define este documento
+        *ver estructura-arbol.png
+
+
+Ejercicio 2
+
+    a) Escribe el documento en SGML que representa esa estructura
+        <!DOCTYPE universidad SYSTEM "universidad.dtd">
+
+    b) ¿Cuántos elementos contenedores hay? Indica sus nombres
+        11
+
+    c) ¿Cuantos elementos terminales hay? Indica sus valores
+        7
+
+    d) ¿Cuantos elementos hay en el nivel 3?. Escribe sus nombres
+        7 (recuerda que la raiz es nivel 0)
+
+
+Ejercicio 3
+
+    a) Escribe el documento en SGML que representa esa estructura
+        <!DOCTYPE generic SYSTEM "generic.dtd">
+        <generic>
+        <contenedor>
+            Texto 5
+            <contenedor> 
+                <contenedor> 
+                    <contenedor> 
+                    Texto 1
+                    </contenedor> 
+                Texto 2
+                </contenedor> 
+            Texto 3
+            <contenedor> 
+             Texto 4
+             </contenedor> 
+        </contenedor>
+
+    b) ¿Cuantos elementos hay en total?
+        11
+
+    c) ¿Cuantos elementos terminales hay?. Indica sus valores
+        5
+
+    d) ¿Cuantos elementos no terminales hay?. Indica cuántos hay en cada nivel
+        6
+
+    e) ¿Cuantos elementos hay en el nivel 5?.Indica sus nombres
+        1
+
+        
