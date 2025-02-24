@@ -1,24 +1,78 @@
+/* Importar fuente Pacifico desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 body {
-    background-color: powderblue;
-    font-family: Arial, sans-serif; /* cambiar fuente*/
-    margin: 0;
-    padding: 0;
-  }
-  
-  h1 {
-    color: /* color del título */;
-    text-align: center;
-  }
-  
-  .product {
-    border: 1px solid #ccc; /* cambiar color producto */
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-  }
-  
-  img {
-    width: 200px; /* tamaño imagen */
-    height: auto;
-  }
-  
+  background-image: url('/home/alumnos/ochayta/LATW-Practicas/P1/imagenes/fondo.jpg');
+  font-family: fantasy;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #FF6F91; /* Rosa coral */
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  font-size: 3.5em;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+h1::before, h1::after {
+  content: '🐾'; /* Icono de huella de perro */
+  font-size: 1.5em;
+  color: #F4A7B9; 
+}
+
+.container {
+  display: flex; 
+  justify-content: flex-start; 
+  gap: 20px; /* Espacio entre las cajas */
+  padding: 20px;
+  overflow-x: auto; /* Permite el desplazamiento horizontal si los productos no caben */
+  flex-wrap: nowrap; /* Evita que los elementos se ajusten a una nueva línea */
+  white-space: nowrap; /* Asegura que todos los productos estén en una sola fila */
+}
+
+.product {
+  background-color: #FFF1F5; /* Color de fondo suave */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 250px;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.2s;
+  flex-shrink: 0; /* Evita que las cajas se encojan al ajustar la ventana */
+}
+
+
+.product:hover {
+  transform: translateY(-5px);
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.product h2 {
+  font-size: 1.2em;
+  color: #333;
+  margin: 10px 0;
+}
+
+.product a {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #FF6F91; /* Combina con el título */
+  font-weight: bold;
+}
+
+.product a:hover {
+  color: #D6457B; /* Un tono más oscuro del rosa coral para resaltar */
+}
