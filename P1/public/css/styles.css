@@ -2,7 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 body {
-  background-image: url('https://garden.spoonflower.com/c/18256371/p/f/m/2uSFt3lvivhq-d2Z4FqgK8G0uHoQo8uFTsP03sOn1idNnwv2INEcnWE0CQ/Paws%20On%20My%20Heart%20-%20Pink%20-%20large%20scale.jpg');
+  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+            url('https://media.istockphoto.com/id/1197978961/vector/seamless-pattern-with-pink-pet-pawprints-and-hearts.jpg?s=612x612&w=0&k=20&c=oAFo9KLX9uAQtptrXKWbfaGXFR5Jl7NyFshRlYwjA0s=');
+background-size: cover;
+background-position: center;
+
   font-family: fantasy;
   margin: 0;
   padding: 0;
@@ -12,42 +16,39 @@ h1 {
   color: #FF6F91; /* Rosa coral */
   font-family: 'Pacifico', cursive;
   text-align: center;
-  font-size: 3.5em;
-  margin-top: 15px;
+  font-size: 4.5em;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
 }
 
-h1::before, h1::after {
-  content: '🐾'; /* Icono de huella de perro */
-  font-size: 1.5em;
-  color: #F4A7B9; 
-}
-
 .container {
-  display: flex; 
-  justify-content: flex-start; 
-  gap: 20px; /* Espacio entre las cajas */
+  display: flex;
+  justify-content: center;
   padding: 20px;
+  justify-content: center; /* Centra las cajas en la pantalla */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */ 
+  gap: 50px; /* Aumenta el espacio entre productos */
   overflow-x: auto; /* Permite el desplazamiento horizontal si los productos no caben */
   flex-wrap: nowrap; /* Evita que los elementos se ajusten a una nueva línea */
   white-space: nowrap; /* Asegura que todos los productos estén en una sola fila */
 }
+
 
 .product {
   background-color: #FFF1F5; /* Color de fondo suave */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 250px;
+  width: 200px; /* Ajuste de tamaño para mejor alineación */
   text-align: center;
   padding: 10px;
   transition: transform 0.2s;
   flex-shrink: 0; /* Evita que las cajas se encojan al ajustar la ventana */
+  display: inline-block;
 }
-
 
 .product:hover {
   transform: translateY(-5px);
