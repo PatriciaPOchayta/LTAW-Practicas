@@ -1,82 +1,72 @@
-const express = require("express");
-const fs = require("fs");
-const cors = require("cors");
+const express = require('express');
+const fs = require('fs');
+const cors = require('cors');
+
 const app = express();
 const PORT = 8001;
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("public")); // Servir archivos estáticos (HTML, CSS, JS)
 
-// Cargar base de datos desde JSON
-const loadDatabase = () => {
-  const data = fs.readFileSync("tienda.json");
-  return JSON.parse(data);
+const DATA_FILE = 'tienda.json';
+
+// Función para leer la base de datos
+const leerDatos = () => {
+    const data = fs.readFileSync(DATA_FILE, 'utf-8');
+    return JSON.parse(data);
 };
 
-// Guardar base de datos en JSON
-const saveDatabase = (data) => {
-  fs.writeFileSync("tienda.json", JSON.stringify(data, null, 2));
+// Función para escribir en la base de datos
+const escribirDatos = (data) => {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
 };
 
-// 📌 Endpoint para obtener todos los productos
-app.get("/api/productos", (req, res) => {
-  const db = loadDatabase();
-  res.json(db.productos);
+// Endpoint para obtener productos
+app.get('/productos', (req, res) => {
+    const datos = leerDatos();
+    res.json(datos.productos);
 });
 
-// 📌 Endpoint para obtener un producto por su nombre
-app.get("/api/productos/:nombre", (req, res) => {
-  const db = loadDatabase();
-  const producto = db.productos.find((p) => p.nombre === req.params.nombre);
-  if (producto) {
-    res.json(producto);
-  } else {
-    res.status(404).json({ mensaje: "Producto no encontrado" });
-  }
+// Endpoint para obtener un solo producto
+app.get('/productos/:nombre', (req, res) => {
+    const datos = leerDatos();
+    const producto = datos.productos.find(p => p.nombre === req.params.nombre);
+    if (producto) {
+        res.json(producto);
+    } else {
+        res.status(404).json({ error: 'Producto no encontrado' });
+    }
 });
 
-// 📌 Endpoint para login de usuario
-app.post("/api/login", (req, res) => {
-  const { nombre, correo } = req.body;
-  const db = loadDatabase();
-  const usuario = db.usuarios.find(
-    (u) => u.nombre === nombre && u.correo === correo
-  );
-
-  if (usuario) {
-    res.json({ mensaje: "Login exitoso", usuario });
-  } else {
-    res.status(401).json({ mensaje: "Credenciales incorrectas" });
-  }
+// Endpoint para login de usuarios
+app.post('/login', (req, res) => {
+    const { nombre, correo } = req.body;
+    const datos = leerDatos();
+    const usuario = datos.usuarios.find(u => u.nombre === nombre && u.correo === correo);
+    
+    if (usuario) {
+        res.json({ mensaje: 'Login exitoso', usuario });
+    } else {
+        res.status(401).json({ error: 'Credenciales incorrectas' });
+    }
 });
 
-// 📌 Endpoint para realizar un pedido
-app.post("/api/pedidos", (req, res) => {
-  const { usuario, direccion, tarjeta, productos } = req.body;
-  const db = loadDatabase();
+// Endpoint para registrar un pedido
+app.post('/pedido', (req, res) => {
+    const { nombre_usuario, direccion_envio, numero_tarjeta, productos } = req.body;
+    
+    if (!nombre_usuario || !direccion_envio || !numero_tarjeta || !productos.length) {
+        return res.status(400).json({ error: 'Datos incompletos' });
+    }
 
-  // Verificar si el usuario existe
-  const userExists = db.usuarios.some((u) => u.nombre === usuario);
-  if (!userExists) {
-    return res.status(400).json({ mensaje: "Usuario no encontrado" });
-  }
+    const datos = leerDatos();
+    datos.pedidos.push({ nombre_usuario, direccion_envio, numero_tarjeta, productos });
+    escribirDatos(datos);
 
-  // Crear nuevo pedido
-  const nuevoPedido = {
-    usuario,
-    direccion,
-    tarjeta,
-    productos,
-  };
-
-  db.pedidos.push(nuevoPedido);
-  saveDatabase(db);
-
-  res.json({ mensaje: "Pedido realizado con éxito", pedido: nuevoPedido });
+    res.json({ mensaje: 'Pedido registrado correctamente' });
 });
 
-// Iniciar el servidor en el puerto 8001
+// Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

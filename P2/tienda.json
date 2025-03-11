@@ -1,34 +1,34 @@
 {
   "usuarios": [
     {
-      "nombre": "admin",
+      "nombre": "root",
       "nombre_real": "Administrador",
       "correo": "admin@tienda.com"
     },
     {
       "nombre": "usuario1",
-      "nombre_real": "Juan Pérez",
-      "correo": "juan.perez@email.com"
+      "nombre_real": "Cliente Normal",
+      "correo": "cliente@tienda.com"
     }
   ],
   "productos": [
     {
-      "nombre": "Collar Pastel",
-      "descripcion": "Collar ajustable para perros, colores pastel.",
+      "nombre": "Collar para Perro",
+      "descripcion": "Collar ajustable de alta calidad para perros.",
       "precio": 14.99,
-      "stock": 10
+      "stock": 20
     },
     {
       "nombre": "Juguete para Perro",
-      "descripcion": "Juguete resistente y seguro para perros.",
+      "descripcion": "Juguete resistente y divertido para perros.",
       "precio": 10.99,
-      "stock": 15
+      "stock": 30
     },
     {
-      "nombre": "Pienso Premium",
-      "descripcion": "Alimento balanceado sin cereales.",
+      "nombre": "Pienso para Perros",
+      "descripcion": "Alimento saludable y equilibrado para perros.",
       "precio": 4.99,
-      "stock": 30
+      "stock": 50
     }
   ],
   "pedidos": []
