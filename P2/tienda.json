@@ -1,0 +1,41 @@
+{
+    "usuarios": [
+      {
+        "nombre": "root",
+        "nombreReal": "Administrador",
+        "correo": "admin@theluckydog.com"
+      },
+      {
+        "nombre": "cliente1",
+        "nombreReal": "Juan Pérez",
+        "correo": "juan.perez@email.com"
+      }
+    ],
+    "productos": [
+      {
+        "id": 1,
+        "nombre": "Collares para Perros",
+        "descripcion": "Collares ajustables en colores pastel, cómodos y resistentes.",
+        "precio": 14.99,
+        "stock": 15,
+        "imagen": "imagenes/dog_with_pastel_collar.jpg"
+      },
+      {
+        "id": 2,
+        "nombre": "Juguetes para Perros",
+        "descripcion": "Juguetes resistentes y divertidos para el entretenimiento de tu perro.",
+        "precio": 10.99,
+        "stock": 20,
+        "imagen": "imagenes/dog_playing_with_toy.jpg"
+      },
+      {
+        "id": 3,
+        "nombre": "Pienso para Perros",
+        "descripcion": "Pienso premium sin cereales, con alto contenido en fibra.",
+        "precio": 4.99,
+        "stock": 10,
+        "imagen": "imagenes/dog_eating_from_bowl.jpg"
+      }
+    ]
+  }
+  

@@ -1,0 +1,129 @@
+/* Importar fuente Pacifico desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+              url('https://media.istockphoto.com/id/1197978961/vector/seamless-pattern-with-pink-pet-pawprints-and-hearts.jpg?s=612x612&w=0&k=20&c=oAFo9KLX9uAQtptrXKWbfaGXFR5Jl7NyFshRlYwjA0s=');
+  background-size: cover;
+  background-position: center;
+  font-family: fantasy;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+h1 {
+  color: #FF6F91; /* Rosa coral */
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  font-size: 4.5em;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Suaviza el título */
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: #555;
+  margin-top: -50px;
+  margin-bottom: 40px; 
+}
+
+.container {
+  display: flex;
+  justify-content: space-around; /* Centra las cajas en la pantalla */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  gap: 50px; /* Aumenta el espacio entre productos */
+  overflow-x: auto; /* Permite el desplazamiento horizontal si los productos no caben */
+  flex-wrap: nowrap; /* Evita que los elementos se ajusten a una nueva línea */
+  white-space: nowrap; /* Asegura que todos los productos estén en una sola fila */
+  min-height: 250px;
+  margin: auto;
+}
+
+.product {
+  justify-content: center;
+  background-color: #FFF1F5; /* Color de fondo suave */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 220px; /* Ajuste de tamaño para mejor alineación */
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.2s;
+  flex-shrink: 0; /* Evita que las cajas se encojan al ajustar la ventana */
+  display: inline-block;
+  align-items: center;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.product h2 {
+  font-size: 1.2em;
+  color: #333;
+  margin: 10px 0;
+}
+
+.product a {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #FF6F91; 
+  font-weight: bold;
+}
+
+.product a:hover {
+  color: #D6457B; 
+}
+
+.footer {
+  margin-top: 70px;
+  background-color: #FFF1F5;
+  padding: 5px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.footer .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+.footer .social-icons img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s;
+}
+
+.footer .social-icons img:hover {
+  transform: scale(1.1);
+}
+
+.contact-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 5px 10px;
+  background-color: #FF6F91;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.contact-button:hover {
+  background-color: #D6457B;
+}
