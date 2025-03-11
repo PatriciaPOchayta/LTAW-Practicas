@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Producto</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .product-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 80%;
+      margin: 50px auto;
+      gap: 40px;
+    }
+
+    .product-container img {
+      width: 40%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-info {
+      width: 50%;
+    }
+
+    .product-info h2 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .product-info p {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .price {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #FF6F91;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: #FF6F91;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    
+    .back-link:hover {
+      color: #D6457B;
+    }
+  </style>
+</head>
+<body>
+  <h1>THE LUCKY DOG</h1>
+
+  <div class="product-container">
+    <img id="product-image" src="" alt="Producto">
+    
+    <div class="product-info">
+      <h2 id="product-name"></h2>
+      <p id="product-description"></p>
+      <p class="price" id="product-price"></p>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link">⬅ Volver a la tienda</a>
+
+  <script>
+    // Obtener el ID del producto desde la URL
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    if (productId) {
+      fetch(`/api/productos/${productId}`)
+        .then(response => response.json())
+        .then(product => {
+          if (product.error) {
+            document.body.innerHTML = "<h2 style='text-align:center;color:red;'>Producto no encontrado</h2>";
+          } else {
+            document.title = product.nombre;
+            document.getElementById('product-name').textContent = product.nombre;
+            document.getElementById('product-description').textContent = product.descripcion;
+            document.getElementById('product-price').textContent = `Precio: ${product.precio}€`;
+            document.getElementById('product-image').src = product.imagen;
+          }
+        })
+        .catch(error => console.error('Error al cargar el producto:', error));
+    } else {
+      document.body.innerHTML = "<h2 style='text-align:center;color:red;'>Producto no encontrado</h2>";
+    }
+  </script>
+</body>
+</html>
