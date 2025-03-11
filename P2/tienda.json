@@ -3,35 +3,33 @@
     {
       "nombre": "root",
       "nombre_real": "Administrador",
-      "correo": "admin@tienda.com"
+      "email": "admin@tienda.com"
     },
     {
       "nombre": "usuario1",
       "nombre_real": "Juan Pérez",
-      "correo": "juan.perez@email.com"
+      "email": "juanperez@correo.com"
     }
   ],
   "productos": [
     {
-      "id": 1,
-      "nombre": "Collares para Perros",
-      "descripcion": "Collares ajustables, resistentes y seguros en colores pastel.",
+      "nombre": "Collar para Perros",
+      "descripcion": "Collar ajustable de colores pastel, resistente y cómodo.",
       "precio": 14.99,
       "stock": 20
     },
     {
-      "id": 2,
-      "nombre": "Juguetes para Perros",
-      "descripcion": "Juguetes resistentes y divertidos para tu mascota.",
+      "nombre": "Juguete para Perros",
+      "descripcion": "Juguete masticable para perros de todas las edades.",
       "precio": 10.99,
-      "stock": 15
+      "stock": 30
     },
     {
-      "id": 3,
       "nombre": "Pienso para Perros",
-      "descripcion": "Alimento sin cereales, con alto contenido en fibra.",
+      "descripcion": "Alimento balanceado sin cereales ni aditivos.",
       "precio": 4.99,
-      "stock": 30
+      "stock": 50
     }
-  ]
+  ],
+  "pedidos": []
 }
