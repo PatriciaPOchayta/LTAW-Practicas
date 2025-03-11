@@ -1,147 +1,37 @@
-/* Importar fuente Pacifico desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
-body {
-  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-              url('https://media.istockphoto.com/id/1197978961/vector/seamless-pattern-with-pink-pet-pawprints-and-hearts.jpg?s=612x612&w=0&k=20&c=oAFo9KLX9uAQtptrXKWbfaGXFR5Jl7NyFshRlYwjA0s=');
-  background-size: cover;
-  background-position: center;
-  font-family: fantasy;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-h1 {
-  color: #FF6F91;
-  font-family: 'Pacifico', cursive;
-  text-align: center;
-  font-size: 4.5em;
-  margin-top: 25px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.subtitle {
-  font-size: 1.2em;
-  color: #555;
-  margin-top: -50px;
-  margin-bottom: 40px;
-}
-
-.container {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  gap: 50px;
-  overflow-x: auto;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  min-height: 250px;
-  margin: auto;
-}
-
-.product {
-  background-color: #FFF1F5;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 220px;
-  text-align: center;
-  padding: 10px;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-  display: inline-block;
-  align-items: center;
-}
-
-.product:hover {
-  transform: translateY(-5px);
-}
-
-.product img {
-  width: 100%;
-  height: auto;
-  border-bottom: 1px solid #ddd;
-}
-
-.product h2 {
-  font-size: 1.2em;
-  color: #333;
-  margin: 10px 0;
-}
-
-.product a {
-  display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
-  color: #FF6F91;
-  font-weight: bold;
-}
-
-.product a:hover {
-  color: #D6457B;
-}
-
-/* Botón para añadir al carrito */
-.add-to-cart {
-  display: block;
-  background-color: #FF6F91;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.add-to-cart:hover {
-  background-color: #D6457B;
-}
-
-/* Estilos para el carrito */
-.cart {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  text-align: left;
-}
-
-.cart h2 {
-  font-size: 1.5em;
-  color: #333;
-}
-
-.cart ul {
-  list-style: none;
-  padding: 0;
-}
-
-.cart li {
-  font-size: 1em;
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.cart .checkout {
-  display: block;
-  background-color: #FF6F91;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-  font-size: 1em;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  text-align: center;
-}
-
-.cart .checkout:hover {
-  background-color: #D6457B;
+{
+  "usuarios": [
+    {
+      "nombre": "root",
+      "nombre_real": "Administrador",
+      "correo": "admin@tienda.com",
+      "password": "admin123"
+    },
+    {
+      "nombre": "usuario1",
+      "nombre_real": "Juan Pérez",
+      "correo": "juan@correo.com",
+      "password": "1234"
+    }
+  ],
+  "productos": [
+    {
+      "nombre": "Collar para Perro",
+      "descripcion": "Collar ajustable con hebilla de acero inoxidable.",
+      "precio": 9.99,
+      "stock": 10
+    },
+    {
+      "nombre": "Pienso para Perros",
+      "descripcion": "Alimento premium sin cereales.",
+      "precio": 4.99,
+      "stock": 20
+    },
+    {
+      "nombre": "Juguete para Perro",
+      "descripcion": "Juguete de goma resistente para masticar.",
+      "precio": 5.99,
+      "stock": 15
+    }
+  ],
+  "pedidos": []
 }
