@@ -15,10 +15,40 @@ function agregarAlCarrito(event) {
     alert(`${nombre} ha sido añadido al carrito.`);
 }
 
-// Asignamos el evento a todos los botones "Añadir al carrito"
+// Función para mostrar el carrito en carrito.html
+function mostrarCarrito() {
+    const contenedorCarrito = document.getElementById("cart-items");
+    const totalCarrito = document.getElementById("cart-total");
+
+    if (!contenedorCarrito || !totalCarrito) return; // Si no estamos en carrito.html, salimos
+
+    contenedorCarrito.innerHTML = ""; // Limpiamos antes de renderizar
+    let total = 0;
+
+    carrito.forEach((producto, index) => {
+        total += producto.precio;
+
+        const item = document.createElement("div");
+        item.classList.add("cart-item");
+        item.innerHTML = `
+            <span>${producto.nombre}</span>
+            <span>${producto.precio.toFixed(2)}€</span>
+        `;
+
+        contenedorCarrito.appendChild(item);
+    });
+
+    totalCarrito.textContent = total.toFixed(2);
+}
+
+// Asignamos eventos al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
+    // Agregar productos al carrito en las páginas de producto
     const botones = document.querySelectorAll(".add-to-cart");
     botones.forEach(boton => {
         boton.addEventListener("click", agregarAlCarrito);
     });
+
+    // Mostrar carrito si estamos en carrito.html
+    mostrarCarrito();
 });
