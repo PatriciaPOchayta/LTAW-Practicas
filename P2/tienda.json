@@ -23,6 +23,12 @@
       "descripcion": "Pelota de goma resistente.",
       "precio": 9.99,
       "stock": 5
+    },
+    {
+      "nombre": "Pienso para Perros",
+      "descripcion": "Alimento sin cereales ni aditivos artificiales, ideal para perros de todos los tamaños.",
+      "precio": 14.99,
+      "stock": 8
     }
   ],
   "pedidos": [
