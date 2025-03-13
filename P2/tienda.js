@@ -10,6 +10,11 @@ function cargarDatos() {
     return JSON.parse(data);
 }
 
+// Función para guardar los datos en tienda.json
+function guardarDatos(datos) {
+    fs.writeFileSync('tienda.json', JSON.stringify(datos, null, 2));
+}
+
 // Función para buscar un usuario por nombre
 function buscarUsuario(nombre) {
     const datos = cargarDatos();
@@ -38,10 +43,27 @@ const server = http.createServer((req, res) => {
             break;
     }
 
-    // Si la solicitud es para obtener los usuarios (ejemplo: /api/usuarios)
+    // Ruta para obtener los usuarios
     if (req.url === '/api/usuarios') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(cargarDatos().usuarios, null, 2));
+        return;
+    }
+
+    // Ruta para procesar la compra
+    if (req.method === 'POST' && req.url === '/api/finalizar-compra') {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            const pedido = JSON.parse(body);
+            let datos = cargarDatos();
+            datos.pedidos.push(pedido);
+            guardarDatos(datos);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ mensaje: 'Pedido guardado correctamente' }));
+        });
         return;
     }
 
