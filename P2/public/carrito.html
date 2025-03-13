@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #FF6F91;
+        }
+        .cart-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-total {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #FF6F91;
+        }
+        .checkout-btn, .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #FF6F91;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .checkout-btn:hover, .back-btn:hover {
+            background-color: #D6457B;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carrito de Compras</h1>
+    
+    <div class="cart-container">
+        <div id="cart-items"></div>
+        <p class="cart-total">Total: <span id="cart-total">0.00</span>€</p>
+        <button class="checkout-btn">Finalizar Compra</button>
+    </div>
+
+    <a href="index.html" class="back-btn">⬅ Volver a la tienda</a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
