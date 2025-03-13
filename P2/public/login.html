@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-btn {
+            background-color: #FF6F91;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        .login-btn:hover {
+            background-color: #D6457B;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Iniciar Sesión</h1>
+        <p>Ingresa tu nombre de usuario:</p>
+        <input type="text" id="username" placeholder="Nombre de usuario" required>
+        <button class="login-btn" onclick="login()">Acceder</button>
+    </div>
+    <script>
+        function login() {
+            const username = document.getElementById("username").value;
+            if (!username) {
+                alert("Por favor, introduce un nombre de usuario.");
+                return;
+            }
+            localStorage.setItem("usuario", username);
+            window.location.href = "index.html"; // Redirigir a la página principal
+        }
+    </script>
+</body>
+</html>
