@@ -56,6 +56,16 @@
     <div class="cart-container">
         <div id="cart-items"></div>
         <p class="cart-total">Total: <span id="cart-total">0.00</span>€</p>
+        <form id="checkout-form">
+            <label for="direccion">Dirección de Envío:</label>
+            <input type="text" id="direccion" required>
+        
+            <label for="tarjeta">Número de Tarjeta:</label>
+            <input type="text" id="tarjeta" required>
+        
+            <button type="submit" class="checkout-btn">Finalizar Compra</button>
+        </form>
+        
         <button class="checkout-btn">Finalizar Compra</button>
     </div>
 
