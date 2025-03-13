@@ -83,5 +83,15 @@
     <a href="index.html" class="back-btn">⬅ Volver a la tienda</a>
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const usuario = localStorage.getItem("usuario");
+          if (!usuario) {
+            alert("Debes iniciar sesión para acceder al carrito.");
+            window.location.href = "login.html";
+          }
+        });
+      </script>
+      
 </body>
 </html>

@@ -22,34 +22,85 @@
     .cart-button:hover {
         background-color: #D6457B;
     }
+
+    .login-info {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1.1em;
+    }
+
+    .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        padding: 8px;
+        width: 300px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .autocomplete-list {
+        position: absolute;
+        background: white;
+        border: 1px solid #ccc;
+        width: 300px;
+        max-height: 150px;
+        overflow-y: auto;
+        display: none;
+    }
+
+    .autocomplete-item {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .autocomplete-item:hover {
+        background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Información de usuario -->
+  <div id="login-info" class="login-info">
+    <a href="login.html">Iniciar sesión</a>
+  </div>
+
   <!-- Botón para ir al carrito -->
   <a href="carrito.html" class="cart-button">🛒 Ver Carrito</a>
 
   <h1>THE LUCKY DOG</h1>
   <h2 class="subtitle">Encuentra lo mejor para tu mascota con un solo clic.</h2>
 
+  <!-- Barra de búsqueda con autocompletado -->
+  <div class="search-container">
+    <input type="text" id="search" class="search-input" placeholder="Buscar productos...">
+    <div id="autocomplete-list" class="autocomplete-list"></div>
+  </div>
+
   <div class="product">
     <h2>Collares</h2>
     <img src="imagenes/dog_collars_pastel.jpg">
     <a href="producto1.html">Ver más</a>
-    <button class="add-to-cart" data-name="Collar para perro" data-price="10">Añadir al carrito</button>
+    <button class="add-to-cart" data-name="Collar para Perro" data-price="14.99">Añadir al carrito</button>
   </div>
   
   <div class="product">
     <h2>Juguetes</h2>
     <img src="imagenes/dog_toys_pastel.jpg">
     <a href="producto2.html">Ver más</a>
-    <button class="add-to-cart" data-name="Juguete para perro" data-price="15">Añadir al carrito</button>
+    <button class="add-to-cart" data-name="Juguete para Perro" data-price="9.99">Añadir al carrito</button>
   </div>
 
   <div class="product">
     <h2>Comida</h2>
     <img src="imagenes/dog_food_bag_pastel.jpg">
     <a href="producto3.html">Ver más</a>
-    <button class="add-to-cart" data-name="Bolsa de comida" data-price="25">Añadir al carrito</button>
+    <button class="add-to-cart" data-name="Pienso para Perros" data-price="14.99">Añadir al carrito</button>
   </div>
 
   <footer class="footer">

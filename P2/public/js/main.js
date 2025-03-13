@@ -1,8 +1,17 @@
 // Verificamos si hay productos en el carrito almacenados en localStorage
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
+// Verificamos si hay un usuario logueado
+let usuarioActual = localStorage.getItem("usuario") || null;
+
 // Función para agregar productos al carrito
 function agregarAlCarrito(event) {
+    if (!usuarioActual) {
+        alert("Debes iniciar sesión para añadir productos al carrito.");
+        window.location.href = "login.html";
+        return;
+    }
+
     const boton = event.target;
     const nombre = boton.getAttribute("data-name");
     const precio = parseFloat(boton.getAttribute("data-price"));
@@ -13,9 +22,8 @@ function agregarAlCarrito(event) {
     }
 
     const producto = { nombre, precio };
-
-    carrito.push(producto); // Agregamos el producto al array
-    localStorage.setItem("carrito", JSON.stringify(carrito)); // Guardamos en localStorage
+    carrito.push(producto);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
 
     alert(`${nombre} ha sido añadido al carrito.`);
 }
@@ -36,9 +44,16 @@ function mostrarCarrito() {
     const contenedorCarrito = document.getElementById("cart-items");
     const totalCarrito = document.getElementById("cart-total");
 
-    if (!contenedorCarrito || !totalCarrito) return; // Si no estamos en carrito.html, salimos
+    if (!contenedorCarrito || !totalCarrito) return;
 
-    contenedorCarrito.innerHTML = ""; // Limpiamos antes de renderizar
+    // Restringir acceso si no hay usuario logueado
+    if (!usuarioActual) {
+        alert("Debes iniciar sesión para ver el carrito.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    contenedorCarrito.innerHTML = "";
     let total = 0;
 
     carrito.forEach((producto) => {
@@ -57,22 +72,9 @@ function mostrarCarrito() {
     totalCarrito.textContent = total.toFixed(2);
 }
 
-// Asignamos eventos al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-    asignarEventosCarrito(); // Asegurar que los botones tengan eventos
-
-    // Mostrar carrito si estamos en carrito.html
-    mostrarCarrito();
-
-    // Asignar el evento al formulario en carrito.html
-    const checkoutForm = document.getElementById("checkout-form");
-    if (checkoutForm) {
-        checkoutForm.addEventListener("submit", finalizarCompra);
-    }
-});
-
+// Función para finalizar la compra
 function finalizarCompra(event) {
-    event.preventDefault(); // Evitamos que el formulario recargue la página
+    event.preventDefault();
 
     const direccion = document.getElementById("direccion").value;
     const tarjeta = document.getElementById("tarjeta").value;
@@ -83,25 +85,85 @@ function finalizarCompra(event) {
     }
 
     const pedido = {
-        usuario: "usuario_prueba", // Cambiar cuando se implemente login
+        usuario: usuarioActual,
         direccion,
         tarjeta,
         productos: carrito.map(producto => producto.nombre)
     };
 
-    // Enviar el pedido al servidor
     fetch("/api/finalizar-compra", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(pedido)
     })
     .then(response => response.json())
     .then(data => {
         alert(data.mensaje);
-        localStorage.removeItem("carrito"); // Vaciar el carrito
-        window.location.href = "index.html"; // Redirigir a la tienda
+        localStorage.removeItem("carrito");
+        window.location.href = "index.html";
     })
     .catch(error => console.error("Error al procesar la compra:", error));
 }
+
+// Función para manejar el login
+function login(event) {
+    event.preventDefault();
+    
+    const usuario = document.getElementById("usuario").value;
+
+    if (!usuario) {
+        alert("Introduce un nombre de usuario.");
+        return;
+    }
+
+    // Simulamos que el usuario existe (en un caso real se verificaría en el servidor)
+    const usuariosValidos = ["root", "usuario1"];
+    if (!usuariosValidos.includes(usuario)) {
+        alert("Usuario no registrado.");
+        return;
+    }
+
+    localStorage.setItem("usuario", usuario);
+    alert(`Bienvenido, ${usuario}`);
+    window.location.href = "index.html";
+}
+
+// Función para cerrar sesión
+function logout() {
+    localStorage.removeItem("usuario");
+    alert("Sesión cerrada correctamente.");
+    window.location.href = "index.html";
+}
+
+// Función para verificar sesión y actualizar UI
+function verificarSesion() {
+    const loginButton = document.getElementById("login-button");
+    const logoutButton = document.getElementById("logout-button");
+    const userDisplay = document.getElementById("user-display");
+
+    if (usuarioActual) {
+        if (loginButton) loginButton.style.display = "none";
+        if (logoutButton) logoutButton.style.display = "inline-block";
+        if (userDisplay) userDisplay.textContent = `Bienvenido, ${usuarioActual}`;
+    } else {
+        if (loginButton) loginButton.style.display = "inline-block";
+        if (logoutButton) logoutButton.style.display = "none";
+        if (userDisplay) userDisplay.textContent = "";
+    }
+}
+
+// Asignamos eventos al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    asignarEventosCarrito();
+    mostrarCarrito();
+    verificarSesion();
+
+    const checkoutForm = document.getElementById("checkout-form");
+    if (checkoutForm) checkoutForm.addEventListener("submit", finalizarCompra);
+
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) loginForm.addEventListener("submit", login);
+
+    const logoutButton = document.getElementById("logout-button");
+    if (logoutButton) logoutButton.addEventListener("click", logout);
+});

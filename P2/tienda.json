@@ -40,6 +40,14 @@
         "Collar para Perro",
         "Juguete para Perro"
       ]
+    },
+    {
+      "productos": [
+        "Collar para perro",
+        "Juguete para perro",
+        "Bolsa de comida",
+        "Collar para perro"
+      ]
     }
   ]
 }
