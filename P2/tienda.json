@@ -1,0 +1,30 @@
+{
+    "usuarios": [
+      {
+        "nombre": "root",
+        "nombreReal": "Administrador",
+        "correo": "admin@example.com"
+      },
+      {
+        "nombre": "usuario1",
+        "nombreReal": "Juan Pérez",
+        "correo": "juan@example.com"
+      }
+    ],
+    "productos": [
+      {
+        "nombre": "Collar para Perro",
+        "descripcion": "Collar ajustable en colores pastel.",
+        "precio": 14.99,
+        "stock": 10
+      },
+      {
+        "nombre": "Juguete para Perro",
+        "descripcion": "Pelota de goma resistente.",
+        "precio": 9.99,
+        "stock": 5
+      }
+    ],
+    "pedidos": []   <-- 🔹 **Nuevo array para almacenar los pedidos**
+  }
+  
