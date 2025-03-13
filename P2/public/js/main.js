@@ -7,12 +7,28 @@ function agregarAlCarrito(event) {
     const nombre = boton.getAttribute("data-name");
     const precio = parseFloat(boton.getAttribute("data-price"));
 
+    if (!nombre || isNaN(precio)) {
+        console.error("Error: Datos del producto no válidos.");
+        return;
+    }
+
     const producto = { nombre, precio };
 
     carrito.push(producto); // Agregamos el producto al array
     localStorage.setItem("carrito", JSON.stringify(carrito)); // Guardamos en localStorage
 
     alert(`${nombre} ha sido añadido al carrito.`);
+}
+
+// Función para asignar eventos a los botones "Añadir al carrito"
+function asignarEventosCarrito() {
+    const botones = document.querySelectorAll(".add-to-cart");
+    if (botones.length === 0) {
+        console.warn("No se encontraron botones 'Añadir al carrito'");
+    }
+    botones.forEach(boton => {
+        boton.addEventListener("click", agregarAlCarrito);
+    });
 }
 
 // Función para mostrar el carrito en carrito.html
@@ -25,7 +41,7 @@ function mostrarCarrito() {
     contenedorCarrito.innerHTML = ""; // Limpiamos antes de renderizar
     let total = 0;
 
-    carrito.forEach((producto, index) => {
+    carrito.forEach((producto) => {
         total += producto.precio;
 
         const item = document.createElement("div");
@@ -43,11 +59,7 @@ function mostrarCarrito() {
 
 // Asignamos eventos al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-    // Agregar productos al carrito en las páginas de producto
-    const botones = document.querySelectorAll(".add-to-cart");
-    botones.forEach(boton => {
-        boton.addEventListener("click", agregarAlCarrito);
-    });
+    asignarEventosCarrito(); // Asegurar que los botones tengan eventos
 
     // Mostrar carrito si estamos en carrito.html
     mostrarCarrito();
