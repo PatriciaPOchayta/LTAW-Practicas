@@ -51,6 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Mostrar carrito si estamos en carrito.html
     mostrarCarrito();
+
+    // Asignar el evento al formulario en carrito.html
+    const checkoutForm = document.getElementById("checkout-form");
+    if (checkoutForm) {
+        checkoutForm.addEventListener("submit", finalizarCompra);
+    }
 });
 
 function finalizarCompra(event) {
@@ -68,7 +74,7 @@ function finalizarCompra(event) {
         usuario: "usuario_prueba", // Cambiar cuando se implemente login
         direccion,
         tarjeta,
-        productos: carrito
+        productos: carrito.map(producto => producto.nombre)
     };
 
     // Enviar el pedido al servidor
@@ -81,17 +87,9 @@ function finalizarCompra(event) {
     })
     .then(response => response.json())
     .then(data => {
-        alert("¡Compra realizada con éxito!");
+        alert(data.mensaje);
         localStorage.removeItem("carrito"); // Vaciar el carrito
         window.location.href = "index.html"; // Redirigir a la tienda
     })
     .catch(error => console.error("Error al procesar la compra:", error));
 }
-
-// Asignar el evento al formulario en carrito.html
-document.addEventListener("DOMContentLoaded", () => {
-    const checkoutForm = document.getElementById("checkout-form");
-    if (checkoutForm) {
-        checkoutForm.addEventListener("submit", finalizarCompra);
-    }
-});
