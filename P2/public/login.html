@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            padding: 50px;
         }
         .login-container {
             max-width: 400px;
@@ -17,43 +17,60 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: #fff;
         }
         input, button {
-            width: 80%;
+            width: 100%;
             padding: 10px;
-            margin-top: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            border: 1px solid #ccc;
         }
-        .login-btn {
+        button {
             background-color: #FF6F91;
             color: white;
+            font-size: 1.2em;
             cursor: pointer;
-            border: none;
         }
-        .login-btn:hover {
+        button:hover {
             background-color: #D6457B;
         }
     </style>
 </head>
 <body>
+
     <div class="login-container">
-        <h1>Iniciar Sesión</h1>
-        <p>Ingresa tu nombre de usuario:</p>
-        <input type="text" id="username" placeholder="Nombre de usuario" required>
-        <button class="login-btn" onclick="login()">Acceder</button>
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="username" placeholder="Ingresa tu nombre de usuario">
+        <button onclick="iniciarSesion()">Acceder</button>
+        <p id="error-msg" style="color: red;"></p>
     </div>
+
     <script>
-        function login() {
-            const username = document.getElementById("username").value;
+        function iniciarSesion() {
+            const username = document.getElementById("username").value.trim();
+            const errorMsg = document.getElementById("error-msg");
+
             if (!username) {
-                alert("Por favor, introduce un nombre de usuario.");
+                errorMsg.textContent = "⚠️ Ingresa un nombre de usuario.";
                 return;
             }
-            localStorage.setItem("usuario", username);
-            window.location.href = "index.html"; // Redirigir a la página principal
+
+            fetch("/api/usuarios")
+                .then(response => response.json())
+                .then(usuarios => {
+                    const usuarioEncontrado = usuarios.find(user => user.nombre === username);
+
+                    if (usuarioEncontrado) {
+                        localStorage.setItem("usuario", username);
+                        window.location.href = "index.html";
+                    } else {
+                        errorMsg.textContent = "⚠️ Usuario no encontrado.";
+                    }
+                })
+                .catch(error => console.error("Error al obtener los usuarios:", error));
         }
     </script>
+
 </body>
 </html>
+
