@@ -52,3 +52,46 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mostrar carrito si estamos en carrito.html
     mostrarCarrito();
 });
+
+function finalizarCompra(event) {
+    event.preventDefault(); // Evitamos que el formulario recargue la página
+
+    const direccion = document.getElementById("direccion").value;
+    const tarjeta = document.getElementById("tarjeta").value;
+
+    if (!direccion || !tarjeta) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    const pedido = {
+        usuario: "usuario_prueba", // Cambiar cuando se implemente login
+        direccion,
+        tarjeta,
+        productos: carrito
+    };
+
+    // Enviar el pedido al servidor
+    fetch("/api/finalizar-compra", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(pedido)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("¡Compra realizada con éxito!");
+        localStorage.removeItem("carrito"); // Vaciar el carrito
+        window.location.href = "index.html"; // Redirigir a la tienda
+    })
+    .catch(error => console.error("Error al procesar la compra:", error));
+}
+
+// Asignar el evento al formulario en carrito.html
+document.addEventListener("DOMContentLoaded", () => {
+    const checkoutForm = document.getElementById("checkout-form");
+    if (checkoutForm) {
+        checkoutForm.addEventListener("submit", finalizarCompra);
+    }
+});
