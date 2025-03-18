@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8001;
+const PORT = 8011;
 
 // Función para cargar los datos desde tienda.json
 function cargarDatos() {
@@ -93,6 +93,31 @@ const server = http.createServer((req, res) => {
         }
     });
 });
+
+// API para autenticar usuarios
+if (req.url === "/api/login" && req.method === "POST") {
+    let body = "";
+
+    req.on("data", chunk => {
+        body += chunk.toString();
+    });
+
+    req.on("end", () => {
+        const { usuario } = JSON.parse(body);
+        const usuarioEncontrado = buscarUsuario(usuario);
+
+        if (!usuarioEncontrado) {
+            res.writeHead(401, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Usuario no encontrado" }));
+            return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ mensaje: "Inicio de sesión exitoso", usuario }));
+    });
+
+    return;
+}
 
 server.listen(PORT, () => {
     console.log(`Servidor funcionando en el puerto ${PORT}`);
