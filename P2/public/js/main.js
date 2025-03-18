@@ -105,7 +105,7 @@ function finalizarCompra(event) {
     .catch(error => console.error("Error al procesar la compra:", error));
 }
 
-// Función para manejar el login
+// Función para manejar el login con el servidor
 function login(event) {
     event.preventDefault();
     
@@ -116,17 +116,25 @@ function login(event) {
         return;
     }
 
-    // Simulamos que el usuario existe (en un caso real se verificaría en el servidor)
-    const usuariosValidos = ["root", "usuario1"];
-    if (!usuariosValidos.includes(usuario)) {
-        alert("Usuario no registrado.");
-        return;
-    }
+    fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
 
-    localStorage.setItem("usuario", usuario);
-    alert(`Bienvenido, ${usuario}`);
-    window.location.href = "index.html";
+        localStorage.setItem("usuario", usuario);
+        alert(`Bienvenido, ${usuario}`);
+        window.location.href = "index.html";
+    })
+    .catch(error => console.error("Error al iniciar sesión:", error));
 }
+
 
 // Función para cerrar sesión
 function logout() {
