@@ -4,6 +4,7 @@ const messages = document.getElementById('messages');
 const usernameInput = document.getElementById('username');
 const notifySound = document.getElementById('notify');
 const typingIndicator = document.getElementById('typing-indicator');
+const userList = document.getElementById('user-list');
 
 socket.on('chat message', (data) => {
   const item = document.createElement('li');
@@ -15,8 +16,7 @@ socket.on('chat message', (data) => {
 });
 
 socket.on('user list', (users) => {
-  const userList = document.getElementById('user-list');
-  userList.innerHTML = `Usuarios conectados: ${users.join(', ')}`;
+  userList.innerHTML = `Usuarios conectados: ${users.join(', ')}`; // Mostrar usuarios conectados
 });
 
 socket.on('typing', (user) => {
@@ -36,5 +36,13 @@ input.addEventListener('keypress', function (e) {
   } else {
     const user = usernameInput.value.trim() || 'Anónimo';
     socket.emit('typing', user); // Enviar evento de "escribiendo"
+  }
+});
+
+// Cuando el usuario introduce un nombre, lo enviamos al servidor para agregarlo como usuario
+usernameInput.addEventListener('blur', () => {
+  const name = usernameInput.value.trim();
+  if (name) {
+    socket.emit('new user', name);
   }
 });
