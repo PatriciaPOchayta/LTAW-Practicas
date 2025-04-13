@@ -1,85 +1,56 @@
 const express = require('express');
-const http = require('http');
-const socketio = require('socket.io');
-const path = require('path');
-
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
-const PORT = 8000;
+let connectedUsers = 0;
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-let usersConnected = 0;
+app.use(express.static('public'));
 
 io.on('connection', (socket) => {
-  usersConnected++;
+    connectedUsers++;
 
-  // Esperamos a que el cliente nos diga su nombre
-  socket.on('new user', (username) => {
-    socket.username = username;
+    // Mensaje de bienvenida (sólo para el nuevo usuario)
+    socket.emit('chat message', '🎉 ¡Bienvenido al chat!');
 
-    // ✅ Mensaje de bienvenida solo para él
-    socket.emit('chat message', {
-      from: 'Sistema',
-      text: `👋 ¡Bienvenido, ${username}!`
+    // Anuncio para el resto de usuarios
+    socket.broadcast.emit('chat message', '👤 Un nuevo usuario se ha conectado.');
+
+    // Escuchar mensajes del cliente
+    socket.on('chat message', (msg) => {
+        if (msg.startsWith('/')) {
+            // Comando
+            let response = '';
+            switch (msg.trim()) {
+                case '/help':
+                    response = '🛠 Comandos disponibles: /help, /list, /hello, /date';
+                    break;
+                case '/list':
+                    response = `👥 Usuarios conectados: ${connectedUsers}`;
+                    break;
+                case '/hello':
+                    response = '👋 ¡Hola! ¿Cómo estás?';
+                    break;
+                case '/date':
+                    response = `📅 Fecha actual: ${new Date().toLocaleString()}`;
+                    break;
+                default:
+                    response = '❌ Comando no reconocido. Usa /help para ver los disponibles.';
+            }
+            socket.emit('chat message', response);
+        } else {
+            // Mensaje normal, reenviar a todos
+            io.emit('chat message', msg);
+        }
     });
 
-    // ✅ Anuncio para el resto
-    socket.broadcast.emit('chat message', {
-      from: 'Sistema',
-      text: `🔔 ${username} se ha unido al chat.`
+    // Usuario se desconecta
+    socket.on('disconnect', () => {
+        connectedUsers--;
+        io.emit('chat message', '👤 Un usuario se ha desconectado.');
     });
-  });
-
-  // Comandos
-  socket.on('chat message', (msg) => {
-    if (msg.startsWith('/')) {
-      let response = '';
-
-      switch (msg) {
-        case '/help':
-          response = 'Comandos: /help /list /hello /date';
-          break;
-        case '/list':
-          response = `👥 Usuarios conectados: ${usersConnected}`;
-          break;
-        case '/hello':
-          response = '👋 ¡Hola!';
-          break;
-        case '/date':
-          response = `📅 Fecha: ${new Date().toLocaleDateString()}`;
-          break;
-        default:
-          response = '❓ Comando no reconocido';
-      }
-
-      socket.emit('chat message', {
-        from: 'Sistema',
-        text: response
-      });
-    } else {
-      // Reenviar mensaje a todos
-      io.emit('chat message', {
-        from: socket.username || 'Anónimo',
-        text: msg
-      });
-    }
-  });
-
-  // Cuando un usuario se desconecta
-  socket.on('disconnect', () => {
-    usersConnected--;
-    if (socket.username) {
-      socket.broadcast.emit('chat message', {
-        from: 'Sistema',
-        text: `❌ ${socket.username} ha salido del chat.`
-      });
-    }
-  });
 });
 
-server.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+http.listen(3000, () => {
+    console.log('Servidor escuchando en http://localhost:3000');
 });

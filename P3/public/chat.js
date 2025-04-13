@@ -13,6 +13,8 @@ socket.on('chat message', (data) => {
   window.scrollTo(0, document.body.scrollHeight);
 });
 
+
+
 input.addEventListener('keypress', function (e) {
   if (e.key === 'Enter' && input.value.trim() !== '') {
     const msg = input.value;
