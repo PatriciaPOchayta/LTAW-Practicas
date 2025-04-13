@@ -10,6 +10,8 @@
     <h2>💬 Chat Web</h2>
     <input id="username" placeholder="Escribe tu nombre..." />
     <ul id="messages"></ul>
+    <p id="user-list"></p> <!-- Aquí se mostrará la lista de usuarios conectados -->
+    <p id="typing-indicator"></p> <!-- Aquí se mostrará el mensaje de "está escribiendo" -->
     <input id="input" placeholder="Escribe un mensaje o comando..." autocomplete="off" />
   </div>
 
@@ -17,9 +19,6 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="chat.js"></script>
-
-
 </body>
 </html>
-
 

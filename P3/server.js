@@ -3,20 +3,29 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-let connectedUsers = 0;
+let connectedUsers = {}; // Usaremos un objeto para guardar el nombre de usuario y su socket ID
 
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
-    connectedUsers++;
+    let userName = '';
 
-    // Mensaje de bienvenida (sólo para el nuevo usuario)
-    socket.emit('chat message', '🎉 ¡Bienvenido al chat!');
+    // Nuevo usuario
+    socket.on('new user', (name) => {
+        userName = name || 'Anónimo';
+        connectedUsers[socket.id] = userName;
 
-    // Anuncio para el resto de usuarios
-    socket.broadcast.emit('chat message', '👤 Un nuevo usuario se ha conectado.');
+        // Mensaje de bienvenida (sólo para el nuevo usuario)
+        socket.emit('chat message', { from: 'Sistema', text: `🎉 ¡Bienvenido, ${userName}!` });
 
-    // Escuchar mensajes del cliente
+        // Anuncio para el resto de usuarios
+        socket.broadcast.emit('chat message', { from: 'Sistema', text: `👤 ${userName} se ha unido al chat.` });
+
+        // Enviar la lista de usuarios conectados
+        io.emit('user list', Object.values(connectedUsers));
+    });
+
+    // Mensajes del chat
     socket.on('chat message', (msg) => {
         if (msg.startsWith('/')) {
             // Comando
@@ -26,7 +35,7 @@ io.on('connection', (socket) => {
                     response = '🛠 Comandos disponibles: /help, /list, /hello, /date';
                     break;
                 case '/list':
-                    response = `👥 Usuarios conectados: ${connectedUsers}`;
+                    response = `👥 Usuarios conectados: ${Object.keys(connectedUsers).length}`;
                     break;
                 case '/hello':
                     response = '👋 ¡Hola! ¿Cómo estás?';
@@ -37,17 +46,18 @@ io.on('connection', (socket) => {
                 default:
                     response = '❌ Comando no reconocido. Usa /help para ver los disponibles.';
             }
-            socket.emit('chat message', response);
+            socket.emit('chat message', { from: 'Sistema', text: response });
         } else {
             // Mensaje normal, reenviar a todos
-            io.emit('chat message', msg);
+            io.emit('chat message', { from: userName, text: msg });
         }
     });
 
     // Usuario se desconecta
     socket.on('disconnect', () => {
-        connectedUsers--;
-        io.emit('chat message', '👤 Un usuario se ha desconectado.');
+        delete connectedUsers[socket.id];
+        io.emit('chat message', { from: 'Sistema', text: `👤 ${userName} ha salido del chat.` });
+        io.emit('user list', Object.values(connectedUsers)); // Actualizar la lista de usuarios
     });
 });
 
