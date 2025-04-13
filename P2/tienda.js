@@ -1,92 +1,56 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
 
-const PORT = 8011;
+const PORT = 8001;
 
-// Función para cargar los datos desde tienda.json
 function cargarDatos() {
-    const data = fs.readFileSync('tienda.json', 'utf8');
-    return JSON.parse(data);
-}
-
-// Función para guardar los datos en tienda.json
-function guardarDatos(datos) {
-    fs.writeFileSync('tienda.json', JSON.stringify(datos, null, 2), 'utf8');
-}
-
-// Función para buscar un usuario por nombre
-function buscarUsuario(nombre) {
-    const datos = cargarDatos();
-    return datos.usuarios.find(user => user.nombre === nombre);
+    try {
+        const data = fs.readFileSync('tienda.json', 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error("Error al leer tienda.json:", error);
+        return { productos: [] };
+    }
 }
 
 const server = http.createServer((req, res) => {
-    let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
+
+    // 🔹 API de búsqueda de productos
+    if (pathname === "/api/buscar-producto" && req.method === "GET") {
+        const query = parsedUrl.query.nombre?.toLowerCase();
+        if (!query) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify({ error: "No se proporcionó un término de búsqueda" }));
+        }
+
+        const productos = cargarDatos().productos.filter(producto =>
+            producto.nombre.toLowerCase().includes(query)
+        );
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(productos));
+    }
+
+    // 🔹 Servir archivos estáticos
+    let filePath = path.join(__dirname, 'public', pathname === '/' ? 'index.html' : pathname);
     let extname = path.extname(filePath);
     let contentType = 'text/html';
 
     switch (extname) {
-        case '.css':
-            contentType = 'text/css';
-            break;
-        case '.js':
-            contentType = 'text/javascript';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.jpg':
-        case '.jpeg':
-        case '.png':
-            contentType = 'image/jpeg';
-            break;
+        case '.css': contentType = 'text/css'; break;
+        case '.js': contentType = 'text/javascript'; break;
+        case '.json': contentType = 'application/json'; break;
+        case '.jpg': case '.jpeg': case '.png': contentType = 'image/jpeg'; break;
     }
 
-    // API para obtener los usuarios
-    if (req.url === '/api/usuarios') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(cargarDatos().usuarios, null, 2));
-        return;
-    }
-
-    // API para finalizar la compra y guardar pedidos
-    if (req.url === '/api/finalizar-compra' && req.method === 'POST') {
-        let body = '';
-
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-
-        req.on('end', () => {
-            const pedido = JSON.parse(body);
-            const datos = cargarDatos();
-
-            // Agregar el pedido al array de pedidos
-            datos.pedidos.push({
-                nombreUsuario: pedido.nombreUsuario,
-                direccionEnvio: pedido.direccionEnvio,
-                numeroTarjeta: pedido.numeroTarjeta,
-                productos: pedido.productos
-            });
-
-            // Guardar los cambios en tienda.json
-            guardarDatos(datos);
-
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ mensaje: "Pedido guardado correctamente" }));
-        });
-
-        return;
-    }
-
-    // Servir archivos estáticos
     fs.readFile(filePath, (err, content) => {
         if (err) {
-            fs.readFile(path.join(__dirname, 'error.html'), (error, errorContent) => {
-                res.writeHead(404, { 'Content-Type': 'text/html' });
-                res.end(errorContent, 'utf-8');
-            });
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end("Página no encontrada", 'utf-8');
         } else {
             res.writeHead(200, { 'Content-Type': contentType });
             res.end(content, 'utf-8');
@@ -94,31 +58,7 @@ const server = http.createServer((req, res) => {
     });
 });
 
-// API para autenticar usuarios
-if (req.url === "/api/login" && req.method === "POST") {
-    let body = "";
-
-    req.on("data", chunk => {
-        body += chunk.toString();
-    });
-
-    req.on("end", () => {
-        const { usuario } = JSON.parse(body);
-        const usuarioEncontrado = buscarUsuario(usuario);
-
-        if (!usuarioEncontrado) {
-            res.writeHead(401, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Usuario no encontrado" }));
-            return;
-        }
-
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ mensaje: "Inicio de sesión exitoso", usuario }));
-    });
-
-    return;
-}
-
 server.listen(PORT, () => {
     console.log(`Servidor funcionando en el puerto ${PORT}`);
 });
+
