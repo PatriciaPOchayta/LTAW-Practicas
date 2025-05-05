@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Servidor de Chat - Práctica 4</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🖥️ Servidor de Chat</h1>
+
+    <section class="info">
+      <p><strong>Node:</strong> <span id="node-version"></span></p>
+      <p><strong>Electron:</strong> <span id="electron-version"></span></p>
+      <p><strong>Chrome:</strong> <span id="chrome-version"></span></p>
+      <p><strong>URL del servidor:</strong> <span id="server-url"></span></p>
+    </section>
+
+    <section class="log-section">
+      <h2>📨 Mensajes del Servidor</h2>
+      <ul id="log"></ul>
+    </section>
+
+    <button id="test-button">Enviar mensaje de prueba</button>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
