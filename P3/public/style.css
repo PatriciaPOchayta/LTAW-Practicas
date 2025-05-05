@@ -1,47 +1,130 @@
+/* Restablecer algunos estilos por defecto */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f0f2f5;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .chat-container {
-    max-width: 600px;
-    margin: 40px auto;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  #username, #input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  ul#messages {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-  
-  #messages li {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  #messages li.system {
-    color: #888;
-    font-style: italic;
-  }
-  
-  #messages li.user strong {
-    color: #007bff;
-  }
-  
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Contenedor del chat */
+.chat-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  width: 400px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Cabecera */
+h2 {
+  background-color: #128C7E;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Estilo del área de mensajes */
+#messages {
+  list-style-type: none;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#messages li {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: 70%;
+  position: relative;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.user {
+  background-color: #e4ffc9;
+  align-self: flex-start;
+  border-top-right-radius: 0;
+}
+
+.system {
+  background-color: #f0f0f0;
+  font-style: italic;
+  color: #888;
+  align-self: center;
+}
+
+.system strong {
+  color: #333;
+}
+
+/* Estilo para el campo de entrada de mensaje */
+#input {
+  border: none;
+  padding: 10px;
+  border-radius: 25px;
+  margin: 10px;
+  margin-bottom: 20px;
+  background-color: #f1f1f1;
+  width: calc(100% - 40px);
+  font-size: 14px;
+}
+
+#input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.3);
+}
+
+/* Estilo para el área de escritura */
+#username {
+  border: none;
+  padding: 10px;
+  border-radius: 25px;
+  margin: 10px;
+  background-color: #f1f1f1;
+  width: calc(100% - 40px);
+  font-size: 14px;
+}
+
+#username:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.3);
+}
+
+/* Indicador de usuario escribiendo */
+#typing-indicator {
+  color: #128C7E;
+  font-style: italic;
+  margin-left: 20px;
+}
+
+/* Estilo para la lista de usuarios conectados */
+#user-list {
+  background-color: #f0f0f0;
+  padding: 10px;
+  font-size: 14px;
+  color: #128C7E;
+  text-align: center;
+}
+
+#user-list strong {
+  color: #333;
+}

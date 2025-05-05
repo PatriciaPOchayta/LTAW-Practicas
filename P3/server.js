@@ -27,10 +27,13 @@ io.on('connection', (socket) => {
 
     // Mensajes del chat
     socket.on('chat message', (msg) => {
-        if (msg.startsWith('/')) {
+        // Asegurarse de que msg.text existe y es un string
+        const messageText = msg?.text;
+
+        if (typeof messageText === 'string' && messageText.startsWith('/')) {
             // Comando
             let response = '';
-            switch (msg.trim()) {
+            switch (messageText.trim()) {
                 case '/help':
                     response = '🛠 Comandos disponibles: /help, /list, /hello, /date';
                     break;
@@ -47,9 +50,9 @@ io.on('connection', (socket) => {
                     response = '❌ Comando no reconocido. Usa /help para ver los disponibles.';
             }
             socket.emit('chat message', { from: 'Sistema', text: response });
-        } else {
+        } else if (typeof messageText === 'string') {
             // Mensaje normal, reenviar a todos
-            io.emit('chat message', { from: userName, text: msg });
+            io.emit('chat message', { from: userName, text: messageText });
         }
     });
 
