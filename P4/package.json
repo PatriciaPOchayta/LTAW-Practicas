@@ -1,0 +1,16 @@
+{
+    "name": "chat-app",
+    "version": "1.0.0",
+    "description": "Aplicación Web de Chat con Express y Socket.io",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "author": "TuNombre",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.18.2",
+      "socket.io": "^4.7.2"
+    }
+  }
+  
